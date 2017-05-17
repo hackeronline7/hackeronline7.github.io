@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+   
+    <head>
+        <meta charset="utf-8">
+        <title>Realtime Code</title>
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+        <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    
+    </head>
+   
+    <body>
+
+        HI
+          <!-- <textarea id="code"></textarea> --> 
+           
+        <pre id="editor">function foo(items) {
+            var i;
+            for (i = 0; i &lt; items.length; i++) {
+                alert("Ace Rocks " + items[i]);
+            }
+        }</pre>
+
+       
+        <script src="src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="scripts/ace-editor.js"></script>
+        <script src="scripts/app.js"></script> 
+        <script src="scripts/update-database.js"> </script> 
+    </body>
+    
+</html>
