@@ -14,7 +14,6 @@
     
     var editor = ace.edit('editor');
     var dbCode = db.ref().child('code');
-    //var dbQueue = db.ref().child('queue');
     var dbQueue = db.ref().child('queue');
     
     var applyingChanges = false;
@@ -52,8 +51,6 @@
             console.log("empty");
             dbQueue.remove();
         }
-        
-        //console.log(dbQueue.getChildrenCount());
     });
 
     dbQueue.on('child_added', function(ref){   
@@ -72,9 +69,5 @@
         editor.getSession().getDocument().applyDeltas([value.event]);
         //console.log(value.event);
         applyingChanges = false;
-    });
-    
-
-
-    
+    });    
 }());
