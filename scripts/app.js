@@ -49,7 +49,7 @@
         });
         
         if(!editor.getValue()){
-            //console.log("empty");
+            console.log("empty");
             dbQueue.remove();
         }
         
