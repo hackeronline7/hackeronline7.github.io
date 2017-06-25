@@ -28,7 +28,7 @@
     });
         
     editor.on('change', function(e){
-        console.log("change);
+        console.log("change");
         
         if(applyingChanges){
             return;
