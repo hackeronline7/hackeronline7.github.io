@@ -11,29 +11,22 @@
     firebase.initializeApp(config);
 
     var db = firebase.database();
-    
     var editor = ace.edit('editor');
     var dbCode = db.ref().child('code');
-    var dbQueue = db.ref().child('queue');
+    var dbQueue = db.ref().child('queue')
+    var applyingChanges = false; 
+    var lastTimestamp = ""; 
     
-    var applyingChanges = false;
+    if(!document.cookie){
+        document.cookie = Math.random().toString(36).substr(2, 9);;
+    }
     
-    var lastTimestamp = "";
-    
-   // var initialRead = true;
-    
-    /*dbCode.once('value', function(ref){
+    dbCode.once('value', function(ref){
         editor.setValue(ref.val(),-1);
-        initialRead=false;
-    });*/
+    });
         
     editor.on('change', function(e){
         
-        if(!localStorage.getItem('uid')){
-            UID = prompt('Please Enter Your Name.');
-            localStorage.setItem('uid', UID);
-        }
-    
         if(applyingChanges){
             return;
         }
@@ -44,7 +37,7 @@
         
         dbQueue.child(Date.now().toString()).set({
             event: e,
-            by: localStorage.getItem('uid')
+            by: document.cookie
         });
         
         if(!editor.getValue()){
@@ -54,20 +47,18 @@
     });
 
     dbQueue.on('child_added', function(ref){   
-        //console.log(ref.val());
         
         if(lastTimestamp > ref.key )
             return;
         
         var value = ref.val();
         
-        if(value.by === localStorage.getItem('uid')){
+        if(value.by === document.cookie){
             return;
         }
         
         applyingChanges = true;
         editor.getSession().getDocument().applyDeltas([value.event]);
-        //console.log(value.event);
         applyingChanges = false;
     });    
 }());
