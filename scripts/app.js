@@ -16,9 +16,11 @@
     var dbQueue = db.ref().child('queue')
     var applyingChanges = false; 
     var lastTimestamp = ""; 
+    var initialRead = false;
     
     if(!document.cookie){
-        document.cookie = Math.random().toString(36).substr(2, 9);;
+        document.cookie = Math.random().toString(36).substr(2, 9);
+        initialRead = true;
     }
     
     dbCode.once('value', function(ref){
@@ -28,6 +30,11 @@
     editor.on('change', function(e){
         
         if(applyingChanges){
+            return;
+        }
+        
+        if(initialRead){
+            initialRead = false;
             return;
         }
             
