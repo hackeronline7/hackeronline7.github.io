@@ -22,8 +22,8 @@
         document.cookie = Math.random().toString(36).substr(2, 9);
     }
     
-    if(editor.getValue()){
-        console.log(editor.getValue());
+    console.log(editor.getValue());
+    if(editor.getValue() !== ""){
         dbCode.once('value', function(ref){
         editor.setValue(ref.val(),-1);
         initialRead = true;
