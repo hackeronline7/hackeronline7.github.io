@@ -23,7 +23,8 @@
     }
     
     if(editor.getValue()){
-    dbCode.once('value', function(ref){
+        console.log(editor.getValue());
+        dbCode.once('value', function(ref){
         editor.setValue(ref.val(),-1);
         initialRead = true;
     });
