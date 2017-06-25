@@ -32,9 +32,7 @@
         if(applyingChanges){
             return;
         }
-        
-
-            
+          
         dbCode.set(editor.getValue());
         
         lastTimestamp = Date.now().toString();
@@ -45,12 +43,14 @@
             event: e,
             by: "initialRead"
         });
+            console.log("initialRead");
         }
         
         else {dbQueue.child(Date.now().toString()).set({
             event: e,
             by: document.cookie
         });
+            console.log("igeneralRead");
         }
         
         if(!editor.getValue()){
