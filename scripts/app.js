@@ -20,11 +20,11 @@
     
     if(!document.cookie){
         document.cookie = Math.random().toString(36).substr(2, 9);
-        initialRead = true;
     }
     
     dbCode.once('value', function(ref){
         editor.setValue(ref.val(),-1);
+        initialRead = true;
     });
         
     editor.on('change', function(e){
