@@ -33,19 +33,25 @@
             return;
         }
         
-        if(initialRead){
-            initialRead = false;
-            return;
-        }
+
             
         dbCode.set(editor.getValue());
         
         lastTimestamp = Date.now().toString();
         
-        dbQueue.child(Date.now().toString()).set({
+        if(initialRead){
+            initialRead = false;
+            dbQueue.child(Date.now().toString()).set({
+            event: e,
+            by: "initialRead"
+        });
+        }
+        
+        else {dbQueue.child(Date.now().toString()).set({
             event: e,
             by: document.cookie
         });
+        }
         
         if(!editor.getValue()){
             console.log("empty");
@@ -64,6 +70,9 @@
             return;
         }
         
+        if(value.by === "initialRead"){
+            return;
+        }
         applyingChanges = true;
         editor.getSession().getDocument().applyDeltas([value.event]);
         applyingChanges = false;
