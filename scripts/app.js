@@ -22,39 +22,47 @@
         document.cookie = Math.random().toString(36).substr(2, 9);
     }
     
-    console.log(dbCode.getValue("code"));
-    if(dbCode.getValue("code")){
-        dbCode.once('value', function(ref){
-        editor.setValue(ref.val(),-1);
-        initialRead = true;
+    
+    dbCode.once('value', function(ref){
+        console.log(ref.val());
+        if(ref.val() !== ""){
+            initialRead = true;
+            editor.setValue(ref.val(),-1);
+            //console.log(initialRead);
+        }
     });
-    }
+    
         
     editor.on('change', function(e){
+        
         console.log("change");
         
         if(applyingChanges){
             return;
         }
-          
+        
+
         dbCode.set(editor.getValue());
         
         lastTimestamp = Date.now().toString();
+        
+        //console.log(initialRead);
         
         if(initialRead){
             initialRead = false;
             dbQueue.child(Date.now().toString()).set({
             event: e,
             by: "initialRead"
-        });
+            });
             console.log("initialRead");
         }
         
-        else {dbQueue.child(Date.now().toString()).set({
-            event: e,
-            by: document.cookie
-        });
-            console.log("igeneralRead");
+        else{
+            dbQueue.child(Date.now().toString()).set({
+                event: e,
+                by: document.cookie
+            });
+            console.log("generalRead");
         }
         
         if(!editor.getValue()){
@@ -77,8 +85,9 @@
         if(value.by === "initialRead"){
             return;
         }
+        
         applyingChanges = true;
         editor.getSession().getDocument().applyDeltas([value.event]);
         applyingChanges = false;
     });    
-}());
+}())
