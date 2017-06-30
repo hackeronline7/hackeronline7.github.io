@@ -19,7 +19,7 @@
     var initialRead = false;
     
     if(!document.cookie){
-        document.cookie = Math.random().toString(36).substr(2, 9);
+        document.cookie = Math.random().toString(36).substr(2, 9); //random id generator
     }
     
     
